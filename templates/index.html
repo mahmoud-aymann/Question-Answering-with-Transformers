@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container">
+    <section class="card intro-card">
+        <h2>Enter passage & question</h2>
+        <p class="hint">Paste a text passage (context), then type a question. The model will extract the answer span from the passage.</p>
+    </section>
+
+    <section class="card form-card">
+        <form id="qa-form" class="qa-form">
+            <div class="field">
+                <label for="context">Passage / Context</label>
+                <textarea id="context" name="context" rows="8" placeholder="Paste the paragraph or article text here..."></textarea>
+            </div>
+            <div class="field">
+                <label for="question">Question</label>
+                <input type="text" id="question" name="question" placeholder="Type your question here...">
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span class="btn-text">Get Answer</span>
+                <span class="btn-loading" aria-hidden="true">Processing...</span>
+            </button>
+        </form>
+    </section>
+
+    <section class="card result-card" id="result-card" hidden>
+        <h3>Answer</h3>
+        <div class="answer-box" id="answer-box"></div>
+        <p class="meta" id="answer-meta"></p>
+    </section>
+
+    <section class="card error-card" id="error-card" hidden>
+        <h3>Error</h3>
+        <p id="error-message"></p>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+(function() {
+    const form = document.getElementById('qa-form');
+    const contextInput = document.getElementById('context');
+    const questionInput = document.getElementById('question');
+    const submitBtn = document.getElementById('submit-btn');
+    const resultCard = document.getElementById('result-card');
+    const answerBox = document.getElementById('answer-box');
+    const answerMeta = document.getElementById('answer-meta');
+    const errorCard = document.getElementById('error-card');
+    const errorMessage = document.getElementById('error-message');
+
+    function setLoading(loading) {
+        submitBtn.disabled = loading;
+        submitBtn.classList.toggle('loading', loading);
+    }
+
+    function showError(msg) {
+        errorMessage.textContent = msg;
+        errorCard.hidden = false;
+        resultCard.hidden = true;
+    }
+
+    function showResult(answer, score, startChar, endChar) {
+        errorCard.hidden = true;
+        answerBox.textContent = answer || '(No answer found)';
+        answerBox.classList.toggle('empty', !answer);
+        answerMeta.textContent = score != null ? 'Score: ' + score : '';
+        resultCard.hidden = false;
+    }
+
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const context = contextInput.value.trim();
+        const question = questionInput.value.trim();
+        if (!context || !question) {
+            showError('Please enter both passage and question.');
+            return;
+        }
+        setLoading(true);
+        try {
+            const res = await fetch('/api/answer', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ context: context, question: question })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                showError(data.error || 'Request failed');
+                return;
+            }
+            showResult(data.answer, data.score, data.start_char, data.end_char);
+        } catch (err) {
+            showError(err.message || 'Network error');
+        } finally {
+            setLoading(false);
+        }
+    });
+})();
+</script>
+{% endblock %}

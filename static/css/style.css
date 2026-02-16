@@ -1,0 +1,228 @@
+/* Question Answering — Professional UI */
+:root {
+    --bg: #0f0f12;
+    --surface: #18181c;
+    --surface2: #222228;
+    --border: #2e2e36;
+    --text: #e4e4e7;
+    --text-muted: #a1a1aa;
+    --accent: #7c3aed;
+    --accent-hover: #8b5cf6;
+    --success: #22c55e;
+    --error: #ef4444;
+    --radius: 12px;
+    --font: 'DM Sans', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Header */
+.header {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.logo {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.logo span {
+    color: var(--accent);
+}
+
+.tagline {
+    margin: 0.25rem 0 0;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 2rem 0 3rem;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.intro-card h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.hint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Form */
+.qa-form .field {
+    margin-bottom: 1.25rem;
+}
+
+.qa-form label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.qa-form textarea,
+.qa-form input[type="text"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: inherit;
+    font-size: 1rem;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    transition: border-color 0.2s;
+}
+
+.qa-form textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.qa-form textarea::placeholder,
+.qa-form input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+.qa-form textarea:focus,
+.qa-form input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* Button */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.btn-primary:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn .btn-loading {
+    display: none;
+}
+
+.btn.loading .btn-text {
+    display: none;
+}
+
+.btn.loading .btn-loading {
+    display: inline;
+}
+
+/* Result */
+.result-card h3,
+.error-card h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.answer-box {
+    padding: 1rem 1.25rem;
+    background: var(--surface2);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    font-size: 1.05rem;
+}
+
+.answer-box.empty {
+    color: var(--text-muted);
+    border-left-color: var(--border);
+}
+
+.meta {
+    margin: 0.75rem 0 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.error-card {
+    border-color: var(--error);
+}
+
+#error-message {
+    margin: 0;
+    color: #fca5a5;
+}
+
+/* Footer */
+.footer {
+    padding: 1.25rem 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}

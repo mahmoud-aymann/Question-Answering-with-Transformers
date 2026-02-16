@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Question Answering{% endblock %} | Transformers QA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">QA<span>Transformer</span></h1>
+                <p class="tagline">Extractive Question Answering with BERT / DistilBERT</p>
+            </div>
+        </header>
+        <main class="main">
+            {% block content %}{% endblock %}
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <p>Stanford SQuAD • Hugging Face Transformers • Flask</p>
+            </div>
+        </footer>
+    </div>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
